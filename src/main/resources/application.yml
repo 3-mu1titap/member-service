@@ -1,0 +1,17 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092 # Kafka ???? ??
+    consumer:
+      group-id: your-consumer-group # ??? ?? ID
+      auto-offset-reset: earliest # ??? ??? ??
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer # ? ????
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer # ? ????
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer # ? ???
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer # ? ???
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/member
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
