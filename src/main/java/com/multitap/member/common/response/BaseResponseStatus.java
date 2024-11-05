@@ -50,6 +50,14 @@ public enum BaseResponseStatus {
     SAME_NICKNAME(HttpStatus.CONFLICT, false, 2011, "현재 사용중인 닉네임입니다."),
     INVALID_EMAIL_ADDRESS(HttpStatus.BAD_REQUEST, false, 2012, "이메일을 다시 확인해주세요."),
 
+
+    /**
+     * 2100: member service error
+     */
+    DUPLICATED_PROFILE(HttpStatus.CONFLICT, false, 3004, "이미 등록된 프로필 입니다"),
+    NO_EXIST_PROFILE(HttpStatus.NOT_FOUND, false, 3002, "프로필이 존재하지 않습니다"),
+    //
+
     /**
      * 3000: MENTORING service error
      */
@@ -86,6 +94,7 @@ public enum BaseResponseStatus {
     NO_EXIST_NOTIFICATION(HttpStatus.NOT_FOUND, false, 5003, "존재하지 않는 알림입니다."),
     CANNOT_SHARE(HttpStatus.BAD_REQUEST, false, 5004, "공유할 수 없는 유저입니다."),
 
+
     /**
      * 6000: gpt-api error
      */
@@ -96,4 +105,6 @@ public enum BaseResponseStatus {
     private final boolean isSuccess;
     private final int code;
     private final String message;
+
+
 }

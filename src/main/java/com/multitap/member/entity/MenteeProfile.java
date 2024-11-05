@@ -1,6 +1,5 @@
 package com.multitap.member.entity;
 
-import com.multitap.member.common.response.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MentorProfile extends BaseEntity {
+public class MenteeProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +19,10 @@ public class MentorProfile extends BaseEntity {
     private String uuid;
 
     @Column(nullable = false)
-    private String mentoringField;
+    private String occupationStatus;
+
+    @Column(nullable = false)
+    private String educationLevel;
 
     @Column(nullable = false)
     private Integer age;
@@ -31,13 +33,22 @@ public class MentorProfile extends BaseEntity {
     @Column(nullable = false)
     private String jobExperience;
 
+    @Column(nullable = false)
+    private String jobType;
+
+    @Column(nullable = false)
+    private Integer jobApplicationCount;
+
     @Builder
-    public MentorProfile(Long id, String uuid, String mentoringField, Integer age, Gender gender, String jobExperience) {
+    public MenteeProfile(Long id, String uuid, String occupationStatus, String educationLevel, Integer age, Gender gender, String jobExperience, String jobType, Integer jobApplicationCount) {
         this.id = id;
         this.uuid = uuid;
-        this.mentoringField = mentoringField;
+        this.occupationStatus = occupationStatus;
+        this.educationLevel = educationLevel;
         this.age = age;
         this.gender = gender;
         this.jobExperience = jobExperience;
+        this.jobType = jobType;
+        this.jobApplicationCount = jobApplicationCount;
     }
 }
