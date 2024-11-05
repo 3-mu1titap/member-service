@@ -1,12 +1,16 @@
 package com.multitap.member.presentation;
 
 import com.multitap.member.application.HashtagService;
+import com.multitap.member.application.KafkaProducerService;
+import com.multitap.member.application.MemberProfileService;
 import com.multitap.member.application.ReactionService;
 import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.dto.in.HashtagIdRequestDto;
+import com.multitap.member.dto.in.MenteeProfileRequestDto;
+import com.multitap.member.dto.in.MentorProfileRequestDto;
 import com.multitap.member.dto.in.ReactionRequestDto;
-import com.multitap.member.vo.in.HashtagIdRequestVo;
-import com.multitap.member.vo.in.ReactionRequestVo;
+import com.multitap.member.dto.out.ProfileImageDto;
+import com.multitap.member.vo.in.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,8 @@ public class MemberController {
 
     private final ReactionService reactionService;
     private final HashtagService hashtagService;
+    private final MemberProfileService memberProfileService;
+    private final KafkaProducerService kafkaProducerService;
 
     @Operation(summary = "특정 회원에 대한 반응(좋아요/블랙리스트) 등록", description = "특정 회원에 대한 반응(좋아요 또는 싫어요)을 등록합니다.")
     @PostMapping("/{targetUuid}/reaction")
@@ -38,6 +44,42 @@ public class MemberController {
         hashtagService.addOrUpdateHashtags(HashtagIdRequestDto.from(hashtagIdRequestVo, uuid), uuid);
         return new BaseResponse<>();
     }
+
+    @Operation(summary = "멘토 프로필 등록", description = "멘토의 프로필을 등록합니다.")
+    @PostMapping("/mentor/profile")
+    public BaseResponse<Void> addMentorProfile(@RequestHeader("Uuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
+        memberProfileService.addMentorProfile(MentorProfileRequestDto.from(mentorProfileRequestVo, uuid));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "멘티 프로필 등록", description = "멘티의 프로필을 등록합니다.")
+    @PostMapping("/mentee/profile")
+    public BaseResponse<Void> addMenteeProfile(@RequestHeader("Uuid") String uuid, @RequestBody MenteeProfileRequestVo menteeProfileRequestVo) {
+        memberProfileService.addMenteeProfile(MenteeProfileRequestDto.from(menteeProfileRequestVo, uuid));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "멘토 프로필 수정", description = "멘토의 프로필을 수정합니다.")
+    @PutMapping("/mentor/profile")
+    public BaseResponse<Void> changeMentorProfile(@RequestHeader("Uuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
+        memberProfileService.changeMentorProfile(MentorProfileRequestDto.from(mentorProfileRequestVo, uuid));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "멘티 프로필 수정", description = "멘티의 프로필을 수정합니다.")
+    @PutMapping("/mentee/profile")
+    public BaseResponse<Void> changeMenteeProfile(@RequestHeader("Uuid") String uuid, @RequestBody MenteeProfileRequestVo menteeProfileRequestVo) {
+        memberProfileService.changeMenteeProfile(MenteeProfileRequestDto.from(menteeProfileRequestVo, uuid));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "회원 프로필 이미지 등록", description = "회원의 프로필 이미지를 등록합니다.")
+    @PostMapping("/profile-image")
+    public BaseResponse<Void> addProfileImage(@RequestBody ProfileImageVo profileImageVo) {
+        kafkaProducerService.sendCreateProfileImageUrl(ProfileImageDto.from(profileImageVo));
+        return new BaseResponse<>();
+    }
+
 
 }
 
