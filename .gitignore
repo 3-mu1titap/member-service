@@ -9,6 +9,8 @@ build/
 ### yml 파일 무시
 *.yml
 
+src/main/resources/application.yml
+
 ### STS ###
 .apt_generated
 .classpath
