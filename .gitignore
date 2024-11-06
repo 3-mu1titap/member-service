@@ -7,8 +7,6 @@ build/
 !**/src/test/**/build/
 
 ### yml 파일 무시
-*.yml
-
 src/main/resources/application.yml
 
 **/SwaggerConfig.class
