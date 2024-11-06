@@ -1,7 +1,6 @@
 package com.multitap.member.presentation;
 
 import com.multitap.member.application.HashtagService;
-import com.multitap.member.application.KafkaProducerService;
 import com.multitap.member.application.MemberProfileService;
 import com.multitap.member.application.ReactionService;
 import com.multitap.member.common.response.BaseResponse;
@@ -9,7 +8,8 @@ import com.multitap.member.dto.in.HashtagIdRequestDto;
 import com.multitap.member.dto.in.MenteeProfileRequestDto;
 import com.multitap.member.dto.in.MentorProfileRequestDto;
 import com.multitap.member.dto.in.ReactionRequestDto;
-import com.multitap.member.dto.out.ProfileImageDto;
+import com.multitap.member.infrastructure.kafka.producer.KafkaProducerService;
+import com.multitap.member.infrastructure.kafka.producer.ProfileImageDto;
 import com.multitap.member.vo.in.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -56,6 +56,7 @@ public class MemberController {
     @PostMapping("/mentee/profile")
     public BaseResponse<Void> addMenteeProfile(@RequestHeader("Uuid") String uuid, @RequestBody MenteeProfileRequestVo menteeProfileRequestVo) {
         memberProfileService.addMenteeProfile(MenteeProfileRequestDto.from(menteeProfileRequestVo, uuid));
+
         return new BaseResponse<>();
     }
 
@@ -63,6 +64,8 @@ public class MemberController {
     @PutMapping("/mentor/profile")
     public BaseResponse<Void> changeMentorProfile(@RequestHeader("Uuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
         memberProfileService.changeMentorProfile(MentorProfileRequestDto.from(mentorProfileRequestVo, uuid));
+
+
         return new BaseResponse<>();
     }
 

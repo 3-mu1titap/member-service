@@ -3,12 +3,13 @@ package com.multitap.member.application;
 import com.multitap.member.dto.in.HashtagIdRequestDto;
 import com.multitap.member.entity.Hashtag;
 import com.multitap.member.infrastructure.HashtagRepository;
+import com.multitap.member.infrastructure.kafka.producer.HashtagDto;
+import com.multitap.member.infrastructure.kafka.producer.KafkaProducerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class HashtagServiceImpl implements HashtagService {
 
     private final HashtagRepository hashtagRepository;
+    private final KafkaProducerService kafkaProducerService;
 
     @Override
     public void addOrUpdateHashtags(List<HashtagIdRequestDto> hashtagIdRequestDtoList, String uuid) {
@@ -27,12 +29,12 @@ public class HashtagServiceImpl implements HashtagService {
             hashtagRepository.deleteByUuid(uuid);
         }
 
-        // 새로운 해시태그 등록
-        List<Hashtag> hashtags = hashtagIdRequestDtoList.stream()
+        List<Hashtag> hashtag = hashtagRepository.saveAll(hashtagIdRequestDtoList.stream()
                 .map(HashtagIdRequestDto::toEntity)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
 
-        hashtagRepository.saveAll(hashtags);
+        kafkaProducerService.sendCreateHashTag(HashtagDto.from(hashtag));
+
     }
 
 }

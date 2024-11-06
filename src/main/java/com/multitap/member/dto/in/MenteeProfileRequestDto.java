@@ -2,7 +2,6 @@ package com.multitap.member.dto.in;
 
 import com.multitap.member.entity.Gender;
 import com.multitap.member.entity.MenteeProfile;
-import com.multitap.member.entity.MentorProfile;
 import com.multitap.member.vo.in.MenteeProfileRequestVo;
 import lombok.Builder;
 import lombok.Getter;

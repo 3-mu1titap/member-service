@@ -1,4 +1,4 @@
-package com.multitap.member.dto.out;
+package com.multitap.member.infrastructure.kafka.producer;
 
 import com.multitap.member.vo.in.ProfileImageVo;
 import lombok.Builder;

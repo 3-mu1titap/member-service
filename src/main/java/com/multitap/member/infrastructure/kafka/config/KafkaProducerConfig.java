@@ -1,6 +1,5 @@
-package com.multitap.member.common.config;
+package com.multitap.member.infrastructure.kafka.config;
 
-import com.multitap.member.dto.out.ProfileImageDto;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class KafkaProducerConfig {
 
     @Bean
-    public ProducerFactory<String, ProfileImageDto> profileImageProducerFactory() {
+    public ProducerFactory<String, Object> defaultProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:29092"); // 단일 포트로 수정
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -28,7 +27,8 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, ProfileImageDto> kafkaProfileImageTemplate() {
-        return new KafkaTemplate<>(profileImageProducerFactory());
+    public KafkaTemplate<String, Object> kafkaTemplate() {
+        return new KafkaTemplate<>(defaultProducerFactory());
     }
+
 }
