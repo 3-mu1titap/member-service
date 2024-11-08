@@ -1,4 +1,4 @@
-package com.multitap.member.infrastructure.kafka.producer;
+package com.multitap.member.kafka.producer;
 
 import com.multitap.member.entity.Reaction;
 import lombok.Builder;

@@ -1,6 +1,5 @@
-package com.multitap.member.infrastructure.kafka.producer;
+package com.multitap.member.kafka.producer;
 
-import com.multitap.member.dto.in.MentorProfileRequestDto;
 import com.multitap.member.entity.Gender;
 import com.multitap.member.entity.MentorProfile;
 import lombok.Builder;

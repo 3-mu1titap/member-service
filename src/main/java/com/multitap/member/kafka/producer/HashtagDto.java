@@ -1,4 +1,4 @@
-package com.multitap.member.infrastructure.kafka.producer;
+package com.multitap.member.kafka.producer;
 
 import com.multitap.member.entity.Hashtag;
 import lombok.Builder;
@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class HashtagDto {
 
-    private Long hashtagId;
     private String uuid;
+    private Long hashtagId;
 
     @Builder
-    public HashtagDto(Long hashtagId, String uuid) {
-        this.hashtagId = hashtagId;
+    public HashtagDto(String uuid, Long hashtagId) {
         this.uuid = uuid;
+        this.hashtagId = hashtagId;
     }
 
     public static List<HashtagDto> from(List<Hashtag> hashtag) {

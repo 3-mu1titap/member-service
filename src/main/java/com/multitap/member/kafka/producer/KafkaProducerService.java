@@ -1,6 +1,4 @@
-package com.multitap.member.infrastructure.kafka.producer;
-
-import com.multitap.member.entity.Reaction;
+package com.multitap.member.kafka.producer;
 
 import java.util.List;
 

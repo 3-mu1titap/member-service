@@ -1,4 +1,4 @@
-package com.multitap.member.infrastructure.kafka.config;
+package com.multitap.member.kafka.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
