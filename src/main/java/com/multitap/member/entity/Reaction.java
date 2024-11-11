@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Getter
@@ -25,6 +26,7 @@ public class Reaction extends BaseEntity {
     @Column(nullable = false)
     private boolean type;
 
+    @Value("false")
     @Column(nullable = false)
     private boolean liked;
 

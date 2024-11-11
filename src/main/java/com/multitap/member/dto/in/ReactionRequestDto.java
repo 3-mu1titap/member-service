@@ -47,7 +47,7 @@ public class ReactionRequestDto {
                 .uuid(reactionRequestDto.getUuid())
                 .targetUuid(reactionRequestDto.getTargetUuid())
                 .type(reactionRequestDto.isType())
-                .liked(!reactionRequestDto.isLiked())
+                .liked(!reaction.isLiked())
                 .build();
     }
 

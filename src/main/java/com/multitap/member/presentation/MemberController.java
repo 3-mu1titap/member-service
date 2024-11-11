@@ -64,8 +64,6 @@ public class MemberController {
     @PutMapping("/mentor/profile")
     public BaseResponse<Void> changeMentorProfile(@RequestHeader("Uuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
         memberProfileService.changeMentorProfile(MentorProfileRequestDto.from(mentorProfileRequestVo, uuid));
-
-
         return new BaseResponse<>();
     }
 
@@ -82,7 +80,6 @@ public class MemberController {
         kafkaProducerService.sendCreateProfileImageUrl(ProfileImageDto.from(profileImageVo));
         return new BaseResponse<>();
     }
-
 
 }
 
