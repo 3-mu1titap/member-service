@@ -4,10 +4,7 @@ import com.multitap.member.application.HashtagService;
 import com.multitap.member.application.MemberProfileService;
 import com.multitap.member.application.ReactionService;
 import com.multitap.member.common.response.BaseResponse;
-import com.multitap.member.dto.in.HashtagIdRequestDto;
-import com.multitap.member.dto.in.MenteeProfileRequestDto;
-import com.multitap.member.dto.in.MentorProfileRequestDto;
-import com.multitap.member.dto.in.ReactionRequestDto;
+import com.multitap.member.dto.in.*;
 import com.multitap.member.kafka.producer.KafkaProducerService;
 import com.multitap.member.kafka.producer.ProfileImageDto;
 import com.multitap.member.vo.in.*;
@@ -30,6 +27,7 @@ public class MemberController {
     private final HashtagService hashtagService;
     private final MemberProfileService memberProfileService;
     private final KafkaProducerService kafkaProducerService;
+
 
     @Operation(summary = "특정 회원에 대한 반응(좋아요/블랙리스트) 등록", description = "특정 회원에 대한 반응(좋아요 또는 싫어요)을 등록합니다.")
     @PostMapping("/{targetUuid}/reaction")
@@ -76,8 +74,8 @@ public class MemberController {
 
     @Operation(summary = "회원 프로필 이미지 등록", description = "회원의 프로필 이미지를 등록합니다.")
     @PostMapping("/profile-image")
-    public BaseResponse<Void> addProfileImage(@RequestBody ProfileImageVo profileImageVo) {
-        kafkaProducerService.sendCreateProfileImageUrl(ProfileImageDto.from(profileImageVo));
+    public BaseResponse<Void> addProfileImage(@RequestBody ProfileImageDto profileImageDto) {
+        kafkaProducerService.sendCreateProfileImageUrl(profileImageDto);
         return new BaseResponse<>();
     }
 

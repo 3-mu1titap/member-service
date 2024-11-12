@@ -7,6 +7,7 @@ import com.multitap.member.kafka.producer.KafkaProducerService;
 import com.multitap.member.kafka.producer.ReactionDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ReactionServiceImpl implements ReactionService {
 
     private final ReactionRepository reactionRepository;
@@ -30,7 +32,6 @@ public class ReactionServiceImpl implements ReactionService {
         ).orElseGet(() ->
                 reactionRepository.save(reactionRequestDto.toEntity(reactionRequestDto))
         );
-
         kafkaProducerService.sendCreateReaction(ReactionDto.from(savedReaction));
     }
 }
