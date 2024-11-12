@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LikeTargetUuidResponseVo {
+public class TargetUuidResponseVo {
 
     private String targetUuid;
 
     @Builder
-    public LikeTargetUuidResponseVo(String targetUuid) {
+    public TargetUuidResponseVo(String targetUuid) {
         this.targetUuid = targetUuid;
     }
 }

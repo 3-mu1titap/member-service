@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ReactionRepository extends JpaRepository<Reaction,Long> {
     Optional<Reaction> findByUuidAndTargetUuidAndType(String uuid, String targetUuid, boolean type);
     List<Reaction> findByUuidAndTypeTrueAndLikedTrue(String uuid);
+    List<Reaction> findByUuidAndTypeFalseAndLikedTrue(String uuid);
 }

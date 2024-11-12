@@ -1,7 +1,7 @@
 package com.multitap.member.application;
 
 import com.multitap.member.dto.in.ReactionRequestDto;
-import com.multitap.member.dto.out.LikeTargetUuidResponseDto;
+import com.multitap.member.dto.out.TargetUuidResponseDto;
 import com.multitap.member.entity.Reaction;
 import com.multitap.member.infrastructure.ReactionRepository;
 import com.multitap.member.kafka.producer.KafkaProducerService;
@@ -38,10 +38,18 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
-    public List<LikeTargetUuidResponseDto> getLikeTargetUuid(String uuid) {
+    public List<TargetUuidResponseDto> getLikeTargetUuid(String uuid) {
         return reactionRepository.findByUuidAndTypeTrueAndLikedTrue(uuid)
                 .stream()
-                .map(LikeTargetUuidResponseDto::from)
+                .map(TargetUuidResponseDto::from)
+                .toList();
+    }
+
+    @Override
+    public List<TargetUuidResponseDto> getBlackTargetUuid(String uuid) {
+        return reactionRepository.findByUuidAndTypeFalseAndLikedTrue(uuid)
+                .stream()
+                .map(TargetUuidResponseDto::from)
                 .toList();
     }
 }
