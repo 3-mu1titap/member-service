@@ -5,9 +5,11 @@ import com.multitap.member.application.MemberProfileService;
 import com.multitap.member.application.ReactionService;
 import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.dto.in.*;
+import com.multitap.member.dto.out.LikeTargetUuidResponseDto;
 import com.multitap.member.kafka.producer.KafkaProducerService;
 import com.multitap.member.kafka.producer.ProfileImageDto;
 import com.multitap.member.vo.in.*;
+import com.multitap.member.vo.out.LikeTargetUuidResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,16 @@ public class MemberController {
     public BaseResponse<Void> addReaction(@RequestBody ReactionRequestVo reactionRequestVo, @PathVariable("targetUuid") String targetUuid, @RequestHeader("Uuid") String uuid) {
         reactionService.toggleReaction(ReactionRequestDto.from(reactionRequestVo, targetUuid, uuid));
         return new BaseResponse<>();
+    }
+
+    @Operation(summary = "관심 멘토로 등록한 멘토 uuid 리스트 반환", description = "관심 멘토 uuid 리스트 반환")
+    @GetMapping("/like/targetUuid")
+    public BaseResponse<List<LikeTargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("Uuid") String uuid) {
+        List<LikeTargetUuidResponseVo> likeTargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid)
+                .stream()
+                .map(LikeTargetUuidResponseDto::toVo)
+                .toList();
+        return new BaseResponse<>(likeTargetUuidResponseVoList);
     }
 
     @Operation(summary = "회원 해시태그 등록, 수정", description = "자신이 원하는 해시태그를 등록 또는 수정합니다.")
