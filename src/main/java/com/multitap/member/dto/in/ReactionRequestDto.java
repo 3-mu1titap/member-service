@@ -13,14 +13,12 @@ public class ReactionRequestDto {
     private String uuid;
     private String targetUuid;
     private boolean type;
-    private boolean liked;
 
     @Builder
-    public ReactionRequestDto(String uuid, String targetUuid, boolean type, boolean liked) {
+    public ReactionRequestDto(String uuid, String targetUuid, boolean type) {
         this.uuid = uuid;
         this.targetUuid = targetUuid;
         this.type = type;
-        this.liked = liked;
     }
 
     public static ReactionRequestDto from(ReactionRequestVo reactionRequestVo, String targetUuid, String uuid) {
@@ -28,16 +26,16 @@ public class ReactionRequestDto {
                 .targetUuid(targetUuid)
                 .uuid(uuid)
                 .type(reactionRequestVo.isType())
-                .liked(reactionRequestVo.isLiked())
                 .build();
     }
 
-    public Reaction toEntity(ReactionRequestDto reactionRequestDto) {
+    public Reaction toEntity(Reaction reaction) {
         return Reaction.builder()
-                .uuid(reactionRequestDto.getUuid())
-                .targetUuid(reactionRequestDto.getTargetUuid())
-                .type(reactionRequestDto.isType())
-                .liked(reactionRequestDto.isLiked())
+                .id(reaction != null ? reaction.getId() : null)
+                .uuid(this.uuid)
+                .targetUuid(this.targetUuid)
+                .type(this.type)
+                .liked(reaction != null && !reaction.isLiked())
                 .build();
     }
 

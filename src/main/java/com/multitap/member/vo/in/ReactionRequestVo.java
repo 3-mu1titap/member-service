@@ -11,8 +11,8 @@ public class ReactionRequestVo {
     @Schema(description = "유형", example = "true", nullable = true)
     private boolean type;
 
-    @Schema(description = "좋아요 유무", example = "true", nullable = true)
-    private boolean liked;
+//    @Schema(description = "좋아요 유무", example = "true", nullable = true)
+//    private boolean liked;
 
 }
 

@@ -26,15 +26,11 @@ public class ReactionServiceImpl implements ReactionService {
     @Override
     public void toggleReaction(ReactionRequestDto reactionRequestDto) {
 
-        Optional<Reaction> reaction = reactionRepository.findByUuidAndTargetUuidAndType(
+        Optional<Reaction> existingReaction = reactionRepository.findByUuidAndTargetUuidAndType(
                 reactionRequestDto.getUuid(), reactionRequestDto.getTargetUuid(), reactionRequestDto.isType());
 
-        Reaction savedReaction = reaction.map(existingReaction ->
-                reactionRepository.save(reactionRequestDto.updateToEntity(reactionRequestDto, existingReaction))
-        ).orElseGet(() ->
-                reactionRepository.save(reactionRequestDto.toEntity(reactionRequestDto))
-        );
-        kafkaProducerService.sendCreateReaction(ReactionDto.from(savedReaction));
+        Reaction reaction = reactionRepository.save(reactionRequestDto.toEntity(existingReaction.orElse(null)));
+        kafkaProducerService.sendCreateReaction(ReactionDto.from(reaction));
     }
 
     @Override
