@@ -5,9 +5,10 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-
-### yml 파일 무시
-*.yml
+src/main/resources/application.yml
+docker-compose.yml
+**/SwaggerConfig.class
+**/SwaggerConfig.java
 
 ### STS ###
 .apt_generated
