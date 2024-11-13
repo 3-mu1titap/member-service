@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ProfileImageVo {
+public class ProfileImageRequestVo {
 
     @Schema(description = "프로필 이미지 URL", example = "https://cdn.imweb.me/upload/S20190918d038d5b2c1898/ec9d644636a5a.jpeg", nullable = true)
     private String profileImageUrl;

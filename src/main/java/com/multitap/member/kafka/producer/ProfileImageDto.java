@@ -1,6 +1,5 @@
-package com.multitap.member.infrastructure.kafka.producer;
+package com.multitap.member.kafka.producer;
 
-import com.multitap.member.vo.in.ProfileImageVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,17 +21,6 @@ public class ProfileImageDto {
         this.mediaType = mediaType;
         this.mediaKind = mediaKind;
         this.mediaSeq = mediaSeq;
-    }
-
-    public static ProfileImageDto from(ProfileImageVo profileImageVo) {
-        return ProfileImageDto.builder()
-                .profileImageUrl(profileImageVo.getProfileImageUrl())
-                .thumbChecked(profileImageVo.getThumbChecked())
-                .mediaType(profileImageVo.getMediaType())
-                .mediaKind(profileImageVo.getMediaKind())
-                .mediaSeq(profileImageVo.getMediaSeq())
-                .build();
-
     }
 
 }

@@ -1,4 +1,4 @@
-package com.multitap.member.infrastructure.kafka.producer;
+package com.multitap.member.kafka.producer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,6 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
         }
 
     }
-
 
     @Override
     public void sendCreateMenteeProfile(MenteeProfileDto menteeProfileDto) {

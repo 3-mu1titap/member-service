@@ -28,6 +28,11 @@ public class Reaction extends BaseEntity {
     @Column(nullable = false)
     private boolean liked;
 
+    @PrePersist
+    public void setDefaultLiked() {
+        this.liked = true;
+    }
+
     @Builder
     public Reaction(Long id, String uuid, String targetUuid, boolean type, boolean liked) {
         this.id = id;

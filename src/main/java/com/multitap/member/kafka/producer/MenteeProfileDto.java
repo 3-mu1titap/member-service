@@ -1,9 +1,7 @@
-package com.multitap.member.infrastructure.kafka.producer;
+package com.multitap.member.kafka.producer;
 
-import com.multitap.member.dto.in.MenteeProfileRequestDto;
 import com.multitap.member.entity.Gender;
 import com.multitap.member.entity.MenteeProfile;
-import com.multitap.member.vo.in.ProfileImageVo;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
