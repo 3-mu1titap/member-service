@@ -23,7 +23,7 @@ public class MemberPointAmount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String uuid;
+    private String userUuid;
     @Column(nullable = true)
     @ColumnDefault("0")
     private Integer amount;
