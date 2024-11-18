@@ -59,6 +59,15 @@ public enum BaseResponseStatus {
     //
 
     /**
+     *
+     *  2200 : member point service
+     *
+     */
+    WRONG_POINT_ACCESS(HttpStatus.BAD_REQUEST, false, 3003, "잘못된 포인트 접근입니다."),
+    POINT_UPDATE_FAILED(HttpStatus.BAD_REQUEST, false, 3004, "포인트 업데이트 실패입니다."),
+
+
+    /**
      * 3000: MENTORING service error
      */
 
