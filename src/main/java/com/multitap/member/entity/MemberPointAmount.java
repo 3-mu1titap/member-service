@@ -30,10 +30,10 @@ public class MemberPointAmount {
 
 
     public void addAmount(Integer amount){
-        if(amount > 0)
-            this.amount += amount;
-        else
+        if(amount == 0)
             throw new BaseException(BaseResponseStatus.WRONG_POINT_ACCESS);
+        else    // 음수값 올 시 감소
+            this.amount += amount;
     }
 
 }

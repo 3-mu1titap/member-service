@@ -21,13 +21,13 @@ public class MemberPointServiceImpl implements MemberPointService{
         log.info("userReqDto: {}" , userReqDto.toString());
 
         // 존재하지 않는다면
-        if(memberPointRepository.findByUuid(userReqDto.getUserUuid()).isEmpty()){
+        if(memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).isEmpty()){
             log.info("findByUuid: in if");
 //            throw new Exception("notFound");
             return new BaseResponse<>(BaseResponseStatus.NO_EXIST_USER);
         }
         // 존재한다면
-        MemberPointAmount memberPointAmount = memberPointRepository.findByUuid(userReqDto.getUserUuid()).get();
+        MemberPointAmount memberPointAmount = memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).get();
 
 
         // update
@@ -44,8 +44,8 @@ public class MemberPointServiceImpl implements MemberPointService{
 
 
     @Override
-    public BaseResponse<?> saveMemberPoint(UserReqDto userReqDto){
-        return new BaseResponse<>(memberPointRepository.save(userReqDto.toEntity()));
+    public BaseResponse<MemberPointAmount> saveMemberPoint(UserReqDto userReqDto){
+        return new BaseResponse<MemberPointAmount>(memberPointRepository.save(userReqDto.toEntity()));
     }
 
 }

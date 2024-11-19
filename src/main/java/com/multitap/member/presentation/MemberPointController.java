@@ -21,16 +21,6 @@ public class MemberPointController {
 
     private final MemberPointService memberPointService;
 
-    @Operation(summary = "회원 포인트 내역을 업데이트", description ="회원 포인트 내역을 업데이트 합니다" )
-    @PostMapping("/points/update")
-    public BaseResponse<?> addPoints(@RequestBody UserReqDto userReqDto)  {
-        log.info("userReqDto {}", userReqDto.toString());
-        return memberPointService.addMemberPoint(userReqDto);
-    }
-
-
-
-
     @Operation(summary = "회원 포인트 내역을 생성", description ="회원 포인트 내역을 생성합니다" )
     @PostMapping("/points/create")
     public BaseResponse<?> createPoints(@RequestBody UserReqDto userReqDto)  {
@@ -38,4 +28,20 @@ public class MemberPointController {
         return new BaseResponse<>(memberPointService.saveMemberPoint(userReqDto));
 
     }
+
+
+    @Operation(summary = "회원 포인트 증가", description ="회원 포인트를 증가시킵니다.")
+    @PostMapping("/points/add")
+    public BaseResponse<Void> addPoints(@RequestBody UserReqDto userReqDto)  {
+        log.info("userReqDto {}", userReqDto.toString());
+        BaseResponse<Void> response = memberPointService.addMemberPoint(userReqDto);
+        log.info("response {}", response.toString());
+        return response;
+    }
+
+
+
+
+
+
 }

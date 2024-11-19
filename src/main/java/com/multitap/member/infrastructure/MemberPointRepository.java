@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberPointRepository extends JpaRepository<MemberPointAmount, Long> {
 
-    Optional<MemberPointAmount> findByUuid(String uuid);
+    Optional<MemberPointAmount> findByUserUuid(String uuid);
 
 
 
