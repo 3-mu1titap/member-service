@@ -28,7 +28,7 @@ public class MemberPointServiceImpl implements MemberPointService{
         }
         // 존재한다면
         MemberPointAmount memberPointAmount = memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).get();
-
+        log.info("memberPointAmount: {}" , memberPointAmount.toString());
 
         // update
         try {

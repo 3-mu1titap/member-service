@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -18,6 +19,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class MemberPointAmount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +33,7 @@ public class MemberPointAmount {
 
     public void addAmount(Integer amount){
         if(amount == 0)
-            throw new BaseException(BaseResponseStatus.WRONG_POINT_ACCESS);
+            throw new BaseException(BaseResponseStatus.ZERO_POINT_UPDATE);
         else    // 음수값 올 시 감소
             this.amount += amount;
     }
