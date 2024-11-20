@@ -33,14 +33,14 @@ public class MemberController {
 
     @Operation(summary = "특정 회원에 대한 반응(좋아요/블랙리스트) 등록", description = "특정 회원에 대한 반응(좋아요 또는 싫어요)을 등록합니다.")
     @PostMapping("/{targetUuid}/reaction")
-    public BaseResponse<Void> addReaction(@RequestBody ReactionRequestVo reactionRequestVo, @PathVariable("targetUuid") String targetUuid, @RequestHeader("Uuid") String uuid) {
+    public BaseResponse<Void> addReaction(@RequestBody ReactionRequestVo reactionRequestVo, @PathVariable("targetUuid") String targetUuid, @RequestHeader("userUuid") String uuid) {
         reactionService.toggleReaction(ReactionRequestDto.from(reactionRequestVo, targetUuid, uuid));
         return new BaseResponse<>();
     }
 
     @Operation(summary = "관심 멘토로 등록한 멘토 uuid 리스트 반환", description = "관심 멘토 uuid 리스트 반환")
     @GetMapping("/like/targetUuid")
-    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("Uuid") String uuid) {
+    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid) {
         List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid)
                 .stream()
                 .map(TargetUuidResponseDto::toVo)
@@ -50,7 +50,7 @@ public class MemberController {
 
     @Operation(summary = "블랙리스트 멘토로 등록한 멘토 uuid 리스트 반환", description = "블랙리스트 멘토 uuid 리스트 반환")
     @GetMapping("/black/targetUuid")
-    public BaseResponse<List<TargetUuidResponseVo>> getBlackTargetUuid(@RequestHeader("Uuid") String uuid) {
+    public BaseResponse<List<TargetUuidResponseVo>> getBlackTargetUuid(@RequestHeader("userUuid") String uuid) {
         List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getBlackTargetUuid(uuid)
                 .stream()
                 .map(TargetUuidResponseDto::toVo)
@@ -60,21 +60,21 @@ public class MemberController {
 
     @Operation(summary = "회원 해시태그 등록, 수정", description = "자신이 원하는 해시태그를 등록 또는 수정합니다.")
     @PostMapping("/hashtag")
-    public BaseResponse<Void> addHashtag(@RequestHeader("Uuid") String uuid, @RequestBody List<HashtagIdRequestVo> hashtagIdRequestVo) {
+    public BaseResponse<Void> addHashtag(@RequestHeader("userUuid") String uuid, @RequestBody List<HashtagIdRequestVo> hashtagIdRequestVo) {
         hashtagService.addOrUpdateHashtags(HashtagIdRequestDto.from(hashtagIdRequestVo, uuid), uuid);
         return new BaseResponse<>();
     }
 
     @Operation(summary = "멘토 프로필 등록", description = "멘토의 프로필을 등록합니다.")
     @PostMapping("/mentor/profile")
-    public BaseResponse<Void> addMentorProfile(@RequestHeader("Uuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
+    public BaseResponse<Void> addMentorProfile(@RequestHeader("userUuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
         memberProfileService.addMentorProfile(MentorProfileRequestDto.from(mentorProfileRequestVo, uuid));
         return new BaseResponse<>();
     }
 
     @Operation(summary = "멘티 프로필 등록", description = "멘티의 프로필을 등록합니다.")
     @PostMapping("/mentee/profile")
-    public BaseResponse<Void> addMenteeProfile(@RequestHeader("Uuid") String uuid, @RequestBody MenteeProfileRequestVo menteeProfileRequestVo) {
+    public BaseResponse<Void> addMenteeProfile(@RequestHeader("userUuid") String uuid, @RequestBody MenteeProfileRequestVo menteeProfileRequestVo) {
         memberProfileService.addMenteeProfile(MenteeProfileRequestDto.from(menteeProfileRequestVo, uuid));
 
         return new BaseResponse<>();
@@ -82,14 +82,14 @@ public class MemberController {
 
     @Operation(summary = "멘토 프로필 수정", description = "멘토의 프로필을 수정합니다.")
     @PutMapping("/mentor/profile")
-    public BaseResponse<Void> changeMentorProfile(@RequestHeader("Uuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
+    public BaseResponse<Void> changeMentorProfile(@RequestHeader("userUuid") String uuid, @RequestBody MentorProfileRequestVo mentorProfileRequestVo) {
         memberProfileService.changeMentorProfile(MentorProfileRequestDto.from(mentorProfileRequestVo, uuid));
         return new BaseResponse<>();
     }
 
     @Operation(summary = "멘티 프로필 수정", description = "멘티의 프로필을 수정합니다.")
     @PutMapping("/mentee/profile")
-    public BaseResponse<Void> changeMenteeProfile(@RequestHeader("Uuid") String uuid, @RequestBody MenteeProfileRequestVo menteeProfileRequestVo) {
+    public BaseResponse<Void> changeMenteeProfile(@RequestHeader("userUuid") String uuid, @RequestBody MenteeProfileRequestVo menteeProfileRequestVo) {
         memberProfileService.changeMenteeProfile(MenteeProfileRequestDto.from(menteeProfileRequestVo, uuid));
         return new BaseResponse<>();
     }
