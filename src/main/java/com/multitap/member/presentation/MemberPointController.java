@@ -3,6 +3,7 @@ package com.multitap.member.presentation;
 import com.multitap.member.application.MemberPointService;
 import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.dto.in.UserReqDto;
+import com.multitap.member.entity.MemberPointAmount;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,9 @@ public class MemberPointController {
 
     @Operation(summary = "회원 포인트 내역을 생성", description ="회원 포인트 내역을 생성합니다" )
     @PostMapping("/points/create")
-    public BaseResponse<?> createPoints(@RequestBody UserReqDto userReqDto)  {
+    public BaseResponse<MemberPointAmount> createPoints(@RequestBody UserReqDto userReqDto)  {
         log.info("userReqDto {}", userReqDto.toString());
         return new BaseResponse<>(memberPointService.saveMemberPoint(userReqDto));
-
     }
 
 
@@ -34,9 +34,9 @@ public class MemberPointController {
     @PostMapping("/points/add")
     public BaseResponse<Void> addPoints(@RequestBody UserReqDto userReqDto)  {
         log.info("userReqDto {}", userReqDto.toString());
-        BaseResponse<Void> response = memberPointService.addMemberPoint(userReqDto);
-        log.info("response {}", response.toString());
-        return response;
+        memberPointService.addMemberPoint(userReqDto);
+
+        return new BaseResponse<>();
     }
 
 

@@ -1,5 +1,6 @@
 package com.multitap.member.application;
 
+import com.multitap.member.common.exception.BaseException;
 import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.common.response.BaseResponseStatus;
 import com.multitap.member.entity.MemberPointAmount;
@@ -8,6 +9,7 @@ import com.multitap.member.dto.in.UserReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,36 +18,22 @@ public class MemberPointServiceImpl implements MemberPointService{
 
     private final MemberPointRepository memberPointRepository;
 
+    @Transactional
     @Override
-    public BaseResponse<Void> addMemberPoint(UserReqDto userReqDto)  {
+    public void addMemberPoint(UserReqDto userReqDto)  {
         log.info("userReqDto: {}" , userReqDto.toString());
 
-        // 존재하지 않는다면
-        if(memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).isEmpty()){
-            log.info("findByUuid: in if");
-//            throw new Exception("notFound");
-            return new BaseResponse<>(BaseResponseStatus.NO_EXIST_USER);
-        }
-        // 존재한다면
-        MemberPointAmount memberPointAmount = memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).get();
-        log.info("memberPointAmount: {}" , memberPointAmount.toString());
+        MemberPointAmount resMemberPointAmount = memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).orElseThrow(
+            () -> new BaseException(BaseResponseStatus.DISABLED_USER)
+        );
 
-        // update
-        try {
-            memberPointAmount.addAmount(userReqDto.getPointQuantity());
-            memberPointRepository.save(memberPointAmount);
-        }
-        catch (Exception e){    // update 실패 시
-            return new BaseResponse<>(BaseResponseStatus.POINT_UPDATE_FAILED);
-        }
-        return new BaseResponse<>(BaseResponseStatus.SUCCESS);
-
+        memberPointRepository.save(userReqDto.toAddPointEntity(resMemberPointAmount));
     }
 
 
     @Override
-    public BaseResponse<MemberPointAmount> saveMemberPoint(UserReqDto userReqDto){
-        return new BaseResponse<MemberPointAmount>(memberPointRepository.save(userReqDto.toEntity()));
+    public MemberPointAmount saveMemberPoint(UserReqDto userReqDto){
+        return memberPointRepository.save(userReqDto.toEntity());
     }
 
 }

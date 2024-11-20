@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
 @Getter
 @Builder
 @AllArgsConstructor
@@ -23,5 +22,13 @@ public class UserReqDto {
                .userUuid(userUuid)
                .amount(pointQuantity)
                .build();
+    }
+
+    public MemberPointAmount toAddPointEntity(MemberPointAmount memberPointAmount){
+        return MemberPointAmount.builder()
+            .id(memberPointAmount.getId())
+            .userUuid(memberPointAmount.getUserUuid())
+            .amount(memberPointAmount.getAmount() + pointQuantity)
+            .build();
     }
 }

@@ -21,6 +21,7 @@ import org.hibernate.annotations.ColumnDefault;
 @AllArgsConstructor
 @ToString
 public class MemberPointAmount {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,11 +32,5 @@ public class MemberPointAmount {
     private Integer amount;
 
 
-    public void addAmount(Integer amount){
-        if(amount == 0)
-            throw new BaseException(BaseResponseStatus.ZERO_POINT_UPDATE);
-        else    // 음수값 올 시 감소
-            this.amount += amount;
-    }
 
 }
