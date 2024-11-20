@@ -59,6 +59,16 @@ public enum BaseResponseStatus {
     //
 
     /**
+     *
+     *  2200 : member point service
+     *
+     */
+    WRONG_POINT_ACCESS(HttpStatus.BAD_REQUEST, false, 3003, "잘못된 포인트 접근입니다."),
+    POINT_UPDATE_FAILED(HttpStatus.BAD_REQUEST, false, 3004, "포인트 업데이트 실패입니다."),
+    ZERO_POINT_UPDATE(HttpStatus.BAD_REQUEST, false, 3005, "포인트 업데이트 양이 0입니다."),
+
+
+    /**
      * 3000: MENTORING service error
      */
 
@@ -101,7 +111,7 @@ public enum BaseResponseStatus {
     // Media
     NO_EXIST_MEDIA(HttpStatus.NOT_FOUND, false, 6001, "존재하지 않는 미디어입니다");
 
-    private final HttpStatusCode httpStatusCode;
+    private final HttpStatus httpStatusCode;
     private final boolean isSuccess;
     private final int code;
     private final String message;
