@@ -45,10 +45,7 @@ public class MemberPointController {
     @Operation(summary = "회원 포인트 사용")
     @PutMapping("/points/use")
     public BaseResponse<Boolean> usePoints(@RequestParam("userUuid") String userUuid,@RequestParam("pointPrice") Integer pointPrice){
-        log.info("userUuid: {}, pointPrice: {}", userUuid, pointPrice);
-//        BaseResponse<Boolean> response = new BaseResponse<>(memberPointService.useMemberPoint(userUuid,pointPrice));
-        memberPointService.useMemberPoint(userUuid,pointPrice);
-        log.info("response: in use ");
+        log.info("userUuid: {}, pointPrice: {} in controller", userUuid, pointPrice);
 
         return new BaseResponse<>(memberPointService.useMemberPoint(userUuid,pointPrice));
     }
