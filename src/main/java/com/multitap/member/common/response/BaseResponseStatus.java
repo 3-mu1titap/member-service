@@ -15,7 +15,7 @@ public enum BaseResponseStatus {
     SUCCESS(HttpStatus.OK, true, 200, "요청에 성공하였습니다."),
 
     /**
-     * 400 : security 에러
+     * 400 : security 에러DISABLED_USER
      */
     WRONG_JWT_TOKEN(HttpStatus.UNAUTHORIZED, false, 401, "다시 로그인 해주세요"),
     NO_SIGN_IN(HttpStatus.UNAUTHORIZED, false, 402, "로그인을 먼저 진행해주세요"),
@@ -66,7 +66,7 @@ public enum BaseResponseStatus {
     WRONG_POINT_ACCESS(HttpStatus.BAD_REQUEST, false, 3003, "잘못된 포인트 접근입니다."),
     POINT_UPDATE_FAILED(HttpStatus.BAD_REQUEST, false, 3004, "포인트 업데이트 실패입니다."),
     ZERO_POINT_UPDATE(HttpStatus.BAD_REQUEST, false, 3005, "포인트 업데이트 양이 0입니다."),
-
+    NOT_ENOUGH_POINT(HttpStatus.BAD_REQUEST, false, 3006, "보유 포인트가 부족합니다."),
 
     /**
      * 3000: MENTORING service error
@@ -82,7 +82,7 @@ public enum BaseResponseStatus {
     DUPLICATED_CATEGORY(HttpStatus.CONFLICT, false, 3006, "이미 등록된 카테고리입니다"),
 
     NO_EXIST_OPTIONS_IN_MENTORING(HttpStatus.NOT_FOUND, false, 3007, "해당 멘토링에 옵션이 존재하지 않습니다"),
-
+    NO_EXIST_SESSION(HttpStatus.NOT_FOUND, false, 3008, "존재하지 않는 세션입니다."),
     /**
      * 4000: comment service error
      */
