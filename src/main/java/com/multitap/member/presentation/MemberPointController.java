@@ -9,8 +9,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,12 +33,24 @@ public class MemberPointController {
 
 
     @Operation(summary = "회원 포인트 증가", description ="회원 포인트를 증가시킵니다.")
-    @PostMapping("/points/add")
+    @PutMapping("/points/add")
     public BaseResponse<Void> addPoints(@RequestBody UserReqDto userReqDto)  {
         log.info("userReqDto {}", userReqDto.toString());
         memberPointService.addMemberPoint(userReqDto);
 
         return new BaseResponse<>();
+    }
+
+
+    @Operation(summary = "회원 포인트 사용")
+    @PutMapping("/points/use")
+    public BaseResponse<Boolean> usePoints(@RequestParam("userUuid") String userUuid,@RequestParam("pointPrice") Integer pointPrice){
+        log.info("userUuid: {}, pointPrice: {}", userUuid, pointPrice);
+//        BaseResponse<Boolean> response = new BaseResponse<>(memberPointService.useMemberPoint(userUuid,pointPrice));
+        memberPointService.useMemberPoint(userUuid,pointPrice);
+        log.info("response: in use ");
+
+        return new BaseResponse<>(memberPointService.useMemberPoint(userUuid,pointPrice));
     }
 
 

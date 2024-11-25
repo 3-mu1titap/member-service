@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class MemberPointAmount {
     private String userUuid;
     @Column(nullable = true)
     @ColumnDefault("0")
+    @Min(value = 0, message = "point amount must be over 0")
     private Integer amount;
 
 
