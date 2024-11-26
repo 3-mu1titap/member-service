@@ -40,8 +40,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-            .title("PAYMENT SERVICE")
-            .description("PAYMENT SERVICE Swagger UI")
+            .title("MEMBER SERVICE")
+            .description("MEMBER SERVICE Swagger UI")
             .version("1.0.0");
     }
 }
