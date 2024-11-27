@@ -20,6 +20,7 @@ repositories {
 ext {
     set('springCloudVersion', "2023.0.3")
 }
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -35,14 +36,16 @@ dependencies {
     // Jackson 라이브러리 추가
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
-    // eureka client
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    // Eureka 클라이언트 의존성 (현재 주석 처리됨)
+    // implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 }
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
-}
+
+// Spring Cloud BOM 설정 (필요 시 주석 처리 가능)
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//    }
+//}
 
 tasks.named('test') {
     useJUnitPlatform()

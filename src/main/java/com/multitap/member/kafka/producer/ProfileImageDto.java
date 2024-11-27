@@ -24,5 +24,4 @@ public class ProfileImageDto {
                 .profileImageUrl(memberProfileImage.getProfileImageUrl())
                 .build();
     }
-
 }
