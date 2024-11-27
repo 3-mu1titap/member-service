@@ -6,6 +6,7 @@ import com.multitap.member.application.ReactionService;
 import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.dto.in.*;
 import com.multitap.member.dto.out.TargetUuidResponseDto;
+import com.multitap.member.entity.MemberProfileImage;
 import com.multitap.member.kafka.producer.KafkaProducerService;
 import com.multitap.member.kafka.producer.ProfileImageDto;
 import com.multitap.member.vo.in.*;
@@ -96,8 +97,15 @@ public class MemberController {
 
     @Operation(summary = "회원 프로필 이미지 등록", description = "회원의 프로필 이미지를 등록합니다.")
     @PostMapping("/profile-image")
-    public BaseResponse<Void> addProfileImage(@RequestBody ProfileImageDto profileImageDto) {
-        kafkaProducerService.sendCreateProfileImageUrl(profileImageDto);
+    public BaseResponse<Void> addProfileImage(@RequestHeader("userUuid") String uuid, @RequestBody ProfileImageRequestVo profileImageRequestVo) {
+        memberProfileService.addProfileImage(ProfileImageRequestDto.from(profileImageRequestVo, uuid));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "회원 프로필 이미지 수정", description = "회원의 프로필 이미지를 등록합니다.")
+    @PutMapping("/profile-image")
+    public BaseResponse<Void> changeProfileImage(@RequestHeader("userUuid") String uuid, @RequestBody ProfileImageRequestVo profileImageRequestVo) {
+        memberProfileService.changeProfileImage(ProfileImageRequestDto.from(profileImageRequestVo, uuid));
         return new BaseResponse<>();
     }
 

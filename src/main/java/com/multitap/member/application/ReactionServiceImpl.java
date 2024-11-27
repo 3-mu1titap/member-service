@@ -5,7 +5,6 @@ import com.multitap.member.dto.out.TargetUuidResponseDto;
 import com.multitap.member.entity.Reaction;
 import com.multitap.member.infrastructure.ReactionRepository;
 import com.multitap.member.kafka.producer.KafkaProducerService;
-import com.multitap.member.kafka.producer.ReactionDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,6 @@ import java.util.Optional;
 public class ReactionServiceImpl implements ReactionService {
 
     private final ReactionRepository reactionRepository;
-    private final KafkaProducerService kafkaProducerService;
 
     @Override
     public void toggleReaction(ReactionRequestDto reactionRequestDto) {
@@ -29,8 +27,7 @@ public class ReactionServiceImpl implements ReactionService {
         Optional<Reaction> existingReaction = reactionRepository.findByUuidAndTargetUuidAndType(
                 reactionRequestDto.getUuid(), reactionRequestDto.getTargetUuid(), reactionRequestDto.isType());
 
-        Reaction reaction = reactionRepository.save(reactionRequestDto.toEntity(existingReaction.orElse(null)));
-        kafkaProducerService.sendCreateReaction(ReactionDto.from(reaction));
+        reactionRepository.save(reactionRequestDto.toEntity(existingReaction.orElse(null)));
     }
 
     @Override

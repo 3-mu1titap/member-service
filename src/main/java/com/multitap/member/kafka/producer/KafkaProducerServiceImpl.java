@@ -57,14 +57,4 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
         }
 
     }
-
-    @Override
-    public void sendCreateReaction(ReactionDto reactionDto) {
-        try {
-            kafkaTemplate.send("create-reaction-topic", reactionDto);
-        } catch (Exception e) {
-            log.info("create reaction event send 실패 : " + e);
-            throw new RuntimeException(e);
-        }
-    }
 }
