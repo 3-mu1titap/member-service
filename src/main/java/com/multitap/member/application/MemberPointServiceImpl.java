@@ -25,7 +25,7 @@ public class MemberPointServiceImpl implements MemberPointService{
         log.info("userReqDto: at serviceImpl {}" , userReqDto.toString());
 
         MemberPointAmount resMemberPointAmount = memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).orElseThrow(
-            () -> new BaseException(BaseResponseStatus.DISABLED_USER)
+            () -> new BaseException(BaseResponseStatus.NO_EXIST_USER)
         );
 
         memberPointRepository.save(userReqDto.toAddPointEntity(resMemberPointAmount));
