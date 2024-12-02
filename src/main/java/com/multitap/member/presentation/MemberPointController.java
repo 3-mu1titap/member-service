@@ -24,15 +24,16 @@ public class MemberPointController {
 
     private final MemberPointService memberPointService;
 
-    @Operation(summary = "회원 포인트 내역을 생성", description ="1. 회원 포인트 내역을 생성합니다" )
-    @PostMapping("/points/create")
-    public BaseResponse<MemberPointAmount> createPoints(@RequestBody UserReqDto userReqDto)  {
-        log.info("userReqDto {}", userReqDto.toString());
-        return new BaseResponse<>(memberPointService.saveMemberPoint(userReqDto));
-    }
+//      addPoints 에 포함된 기능
+//    @Operation(summary = "1. 회원 포인트 내역을 생성", description ="1. 회원 포인트 내역을 생성합니다" )
+//    @PostMapping("/points/create")
+//    public BaseResponse<MemberPointAmount> createPoints(@RequestBody UserReqDto userReqDto)  {
+//        log.info("userReqDto {}", userReqDto.toString());
+//        return new BaseResponse<>(memberPointService.saveMemberPoint(userReqDto));
+//    }
 
 
-    @Operation(summary = "회원 포인트 증가", description ="2. 회원 포인트를 증가시킵니다. <br>"
+    @Operation(summary = "2. 회원 포인트 증가", description ="2. 회원 포인트를 증가시킵니다. <br>"
         + " 포인트 내역 생성 이후 포인트 증가 됩니다.")
     @PutMapping("/points/add")
     public BaseResponse<Void> addPoints(@RequestBody UserReqDto userReqDto)  {
