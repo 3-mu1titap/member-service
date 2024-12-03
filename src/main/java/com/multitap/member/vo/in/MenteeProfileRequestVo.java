@@ -15,8 +15,8 @@ public class MenteeProfileRequestVo {
     @Schema(description = "최종학력", example = "초졸", nullable = true)
     private String educationLevel;
 
-    @Schema(description = "나이", example = "27", nullable = true)
-    private Integer age;
+    @Schema(description = "생년월일", example = "1998-04-28", nullable = true)
+    private String birthDate;
 
     @Schema(description = "성별", example = "FEMALE", nullable = true)
     private Gender gender;

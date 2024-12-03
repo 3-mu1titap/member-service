@@ -13,11 +13,13 @@ import com.multitap.member.kafka.producer.MenteeProfileDto;
 import com.multitap.member.kafka.producer.MentorProfileDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class MemberProfileServiceImpl implements MemberProfileService {
 
     private final MentorProfileRepository mentorProfileRepository;
@@ -30,6 +32,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
             throw new BaseException(BaseResponseStatus.DUPLICATED_PROFILE);
         }
         MentorProfile mentorProfile = mentorProfileRepository.save(mentorProfileRequestDto.toEntity(mentorProfileRequestDto));
+        log.info("나이: {}", mentorProfile.getAge());
         kafkaProducerService.sendCreateMentorProfile(MentorProfileDto.from(mentorProfile));
     }
 
@@ -38,6 +41,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         MentorProfile mentorProfile = mentorProfileRepository.findByUuid(mentorProfileRequestDto.getUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_PROFILE));
         mentorProfileRepository.save(mentorProfileRequestDto.updateToEntity(mentorProfileRequestDto, mentorProfile));
+        log.info("나이: {}", mentorProfile.getAge());
         kafkaProducerService.sendCreateMentorProfile(MentorProfileDto.from(mentorProfile));
     }
 
@@ -47,6 +51,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
             throw new BaseException(BaseResponseStatus.DUPLICATED_PROFILE);
         }
         MenteeProfile menteeProfile = menteeProfileRepository.save(menteeProfileRequestDto.toEntity(menteeProfileRequestDto));
+        log.info("나이: {}", menteeProfile.getAge());
         kafkaProducerService.sendCreateMenteeProfile(MenteeProfileDto.from(menteeProfile));
     }
 
@@ -55,6 +60,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         MenteeProfile menteeProfile = menteeProfileRepository.findByUuid(menteeProfileRequestDto.getUuid())
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_EXIST_PROFILE));
         menteeProfileRepository.save(menteeProfileRequestDto.updateToEntity(menteeProfileRequestDto, menteeProfile));
+        log.info("나이: {}", menteeProfile.getAge());
         kafkaProducerService.sendCreateMenteeProfile(MenteeProfileDto.from(menteeProfile));
     }
 }

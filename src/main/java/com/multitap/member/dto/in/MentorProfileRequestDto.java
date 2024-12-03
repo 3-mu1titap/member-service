@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @NoArgsConstructor
 public class MentorProfileRequestDto {
@@ -30,7 +33,7 @@ public class MentorProfileRequestDto {
         return MentorProfileRequestDto.builder()
                 .uuid(uuid)
                 .mentoringField(mentorProfileRequestVo.getMentoringField())
-                .age(mentorProfileRequestVo.getAge())
+                .age(createAge(mentorProfileRequestVo.getBirthDate()))
                 .gender(mentorProfileRequestVo.getGender())
                 .jobExperience(mentorProfileRequestVo.getJobExperience())
                 .build();
@@ -55,6 +58,16 @@ public class MentorProfileRequestDto {
                 .gender(mentorProfileRequestDto.getGender())
                 .jobExperience(mentorProfileRequestDto.getJobExperience())
                 .build();
+    }
+
+    //나이 계산
+    public static Integer createAge(String birthDate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthdate = LocalDate.parse(birthDate, formatter);
+
+        LocalDate currentDate = LocalDate.now();
+
+        return currentDate.getYear() - birthdate.getYear();
     }
 
 }
