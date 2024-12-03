@@ -33,8 +33,9 @@ public class MemberPointController {
 //    }
 
 
-    @Operation(summary = "2. 회원 포인트 증가", description ="2. 회원 포인트를 증가시킵니다. <br>"
-        + " 포인트 내역 생성 이후 포인트 증가 됩니다.")
+    @Operation(summary = "회원 포인트 증가", description ="회원 포인트를 증가시킵니다. <br>"
+        + " 회원 포인트 내역이 없을 시 포인트 내역 생성 <br>"
+        + " 존재 시 포인트 내역 업데이트")
     @PutMapping("/points/add")
     public BaseResponse<Void> addPoints(@RequestBody UserReqDto userReqDto)  {
         log.info("userReqDto {}", userReqDto.toString());
