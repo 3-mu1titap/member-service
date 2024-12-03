@@ -7,6 +7,7 @@ import com.multitap.member.common.response.BaseResponseStatus;
 import com.multitap.member.entity.MemberPointAmount;
 import com.multitap.member.infrastructure.MemberPointRepository;
 import com.multitap.member.dto.in.UserReqDto;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,15 @@ public class MemberPointServiceImpl implements MemberPointService{
     public void addMemberPoint(UserReqDto userReqDto)  {
         log.info("userReqDto: at serviceImpl {}" , userReqDto.toString());
 
-        MemberPointAmount resMemberPointAmount = memberPointRepository.findByUserUuid(userReqDto.getUserUuid()).orElseThrow(
-            () -> new BaseException(BaseResponseStatus.NO_EXIST_USER)
-        );
+        Optional<MemberPointAmount> resMemberPointAmount = memberPointRepository.findByUserUuid(userReqDto.getUserUuid());
 
-        memberPointRepository.save(userReqDto.toAddPointEntity(resMemberPointAmount));
+        if(resMemberPointAmount.isEmpty()){
+            memberPointRepository.save(userReqDto.toEntity());
+        }
+        else {
+            memberPointRepository.save(userReqDto.toAddPointEntity(resMemberPointAmount.get()));
+        }
+
     }
 
 
