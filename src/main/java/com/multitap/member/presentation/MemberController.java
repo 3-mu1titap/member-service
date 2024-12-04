@@ -30,6 +30,7 @@ public class MemberController {
     private final HashtagService hashtagService;
     private final MemberProfileService memberProfileService;
 
+    //todo: dev 설정 변경함
 
     @Operation(summary = "멘티 좋아요 유무 조회", description = "멘토에 대한 관심 멘토 등록 유무를 조회 합니다.")
     @GetMapping("/{targetUuid}/like")
