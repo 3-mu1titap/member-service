@@ -5,9 +5,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-src/main/resources/application.yml
-**/SwaggerConfig.class
-**/SwaggerConfig.java
+
 
 ### STS ###
 .apt_generated
@@ -40,6 +38,9 @@ out/
 ### VS Code ###
 .vscode/
 
+### application.yml 무시
+src/main/resources/application.yml
 
-### txt file ###
-*.txt
+### SwaggerConfig 관련 파일 무시
+#**/SwaggerConfig.class
+#**/SwaggerConfig.java
