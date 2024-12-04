@@ -2,10 +2,7 @@ package com.multitap.member.entity;
 
 import com.multitap.member.common.response.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter

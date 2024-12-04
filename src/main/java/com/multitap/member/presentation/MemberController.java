@@ -6,9 +6,6 @@ import com.multitap.member.application.ReactionService;
 import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.dto.in.*;
 import com.multitap.member.dto.out.TargetUuidResponseDto;
-import com.multitap.member.entity.MemberProfileImage;
-import com.multitap.member.kafka.producer.KafkaProducerService;
-import com.multitap.member.kafka.producer.ProfileImageDto;
 import com.multitap.member.vo.in.*;
 import com.multitap.member.vo.out.TargetUuidResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,8 +44,8 @@ public class MemberController {
 
     @Operation(summary = "관심 멘토로 등록한 멘토 uuid 리스트 반환", description = "관심 멘토 uuid 리스트 반환")
     @GetMapping("/like")
-    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid) {
-        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid)
+    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid, @RequestParam(required = false) String cursorTargetUuid, @RequestParam(defaultValue = "10") int size) {
+        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid,cursorTargetUuid,size)
                 .stream()
                 .map(TargetUuidResponseDto::toVo)
                 .toList();

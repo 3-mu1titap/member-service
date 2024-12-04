@@ -1,16 +1,15 @@
 package com.multitap.member.application;
 
-import com.multitap.member.common.exception.BaseException;
-import com.multitap.member.common.response.BaseResponseStatus;
 import com.multitap.member.dto.in.ReactionRequestDto;
 import com.multitap.member.dto.out.LikedResponseDto;
 import com.multitap.member.dto.out.TargetUuidResponseDto;
 import com.multitap.member.entity.Reaction;
 import com.multitap.member.infrastructure.ReactionRepository;
-import com.multitap.member.kafka.producer.KafkaProducerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,13 +32,24 @@ public class ReactionServiceImpl implements ReactionService {
         reactionRepository.save(reactionRequestDto.toEntity(existingReaction.orElse(null)));
     }
 
+
     @Override
-    public List<TargetUuidResponseDto> getLikeTargetUuid(String uuid) {
-        return reactionRepository.findByUuidAndTypeTrueAndLikedTrue(uuid)
-                .stream()
-                .map(TargetUuidResponseDto::from)
-                .toList();
+    public List<TargetUuidResponseDto> getLikeTargetUuid(String targetUuid, String cursorTargetUuid, int size) {
+        Pageable pageable = PageRequest.of(0, size);
+
+        if (cursorTargetUuid == null) {
+            return reactionRepository.findByTargetUuidAndTypeTrueAndLikedTrue(targetUuid, pageable)
+                    .stream()
+                    .map(TargetUuidResponseDto::from)
+                    .toList();
+        } else {
+            return reactionRepository.findPreviousByTargetUuidAndTypeTrueAndLikedTrue(cursorTargetUuid, pageable)
+                    .stream()
+                    .map(TargetUuidResponseDto::from)
+                    .toList();
+        }
     }
+
 
     @Override
     public List<TargetUuidResponseDto> getBlackTargetUuid(String uuid) {
