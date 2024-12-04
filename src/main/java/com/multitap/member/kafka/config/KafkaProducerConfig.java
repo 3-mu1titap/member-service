@@ -20,11 +20,7 @@ public class KafkaProducerConfig {
     @Bean
     public ProducerFactory<String, Object> defaultProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
-<<<<<<< Updated upstream
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka-1:19092,kafka-2:19092,kafka-3:19092"); // 단일 포트로 수정
-=======
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"kafka-1:19092,kafka-2:19092,kafka-3:19092");
->>>>>>> Stashed changes
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
