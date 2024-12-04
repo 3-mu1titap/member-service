@@ -7,5 +7,5 @@ public interface MemberPointService {
 
     void addMemberPoint(UserReqDto userReqDto);
     MemberPointAmount saveMemberPoint(UserReqDto userReqDto);
-
+    Boolean useMemberPoint(String userUuid, Integer pointAmount);
 }
