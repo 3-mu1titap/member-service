@@ -1,5 +1,6 @@
 package com.multitap.member.kafka.producer;
 
+import com.multitap.member.entity.MemberProfileImage;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,19 +9,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProfileImageDto {
 
+    private String uuid;
     private String profileImageUrl;
-    private Boolean thumbChecked;
-    private String mediaType;
-    private String mediaKind;
-    private Integer mediaSeq;
 
     @Builder
-    public ProfileImageDto(String profileImageUrl, Boolean thumbChecked, String mediaType, String mediaKind, Integer mediaSeq) {
+    public ProfileImageDto(String uuid, String profileImageUrl) {
+        this.uuid = uuid;
         this.profileImageUrl = profileImageUrl;
-        this.thumbChecked = thumbChecked;
-        this.mediaType = mediaType;
-        this.mediaKind = mediaKind;
-        this.mediaSeq = mediaSeq;
+    }
+
+    public static ProfileImageDto from(MemberProfileImage memberProfileImage) {
+        return ProfileImageDto.builder()
+                .uuid(memberProfileImage.getUuid())
+                .profileImageUrl(memberProfileImage.getProfileImageUrl())
+                .build();
     }
 
 }
