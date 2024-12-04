@@ -39,6 +39,7 @@ public class MemberController {
         return new BaseResponse<>();
     }
 
+    //todo: 페이지네이션 처리하기
     @Operation(summary = "관심 멘토로 등록한 멘토 uuid 리스트 반환", description = "관심 멘토 uuid 리스트 반환")
     @GetMapping("/like/targetUuid")
     public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid) {
