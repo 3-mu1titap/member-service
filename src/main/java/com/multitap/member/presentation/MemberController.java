@@ -31,6 +31,7 @@ public class MemberController {
     private final MemberProfileService memberProfileService;
     private final KafkaProducerService kafkaProducerService;
 
+    //todo: dev 설정 변경함
 
     @Operation(summary = "특정 회원에 대한 반응(좋아요/블랙리스트) 등록", description = "특정 회원에 대한 반응(좋아요 또는 싫어요)을 등록합니다.")
     @PostMapping("/{targetUuid}/reaction")
