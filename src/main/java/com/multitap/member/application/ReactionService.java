@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReactionService {
     void toggleReaction(ReactionRequestDto reactionRequestDto);
-    List<TargetUuidResponseDto> getLikeTargetUuid(String targetUuid, String cursorTargetUuid, int size);
-    List<TargetUuidResponseDto> getBlackTargetUuid(String uuid);
+    List<TargetUuidResponseDto> getLikeTargetUuid(String targetUuid, Long cursorId, int size);
+    List<TargetUuidResponseDto> getBlackTargetUuid(String uuid, Long cursorId, int size);
     LikedResponseDto getLiked(String uuid,String targetUuid);
 }

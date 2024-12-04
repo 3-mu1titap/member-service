@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TargetUuidResponseVo {
 
+    private Long id;
     private String targetUuid;
 
     @Builder
-    public TargetUuidResponseVo(String targetUuid) {
+    public TargetUuidResponseVo(Long id, String targetUuid) {
+        this.id = id;
         this.targetUuid = targetUuid;
     }
 }

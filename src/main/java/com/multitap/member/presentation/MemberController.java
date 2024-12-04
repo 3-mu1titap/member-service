@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Tag(name = "마이페이지 관리 API", description = "마이페이지 관련 API endpoints")
@@ -44,8 +45,8 @@ public class MemberController {
 
     @Operation(summary = "관심 멘토로 등록한 멘토 uuid 리스트 반환", description = "관심 멘토 uuid 리스트 반환")
     @GetMapping("/like")
-    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid, @RequestParam(required = false) String cursorTargetUuid, @RequestParam(defaultValue = "10") int size) {
-        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid,cursorTargetUuid,size)
+    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid, @RequestParam(required = false) Long cursorId, @RequestParam(defaultValue = "10") int size) {
+        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid,cursorId,size)
                 .stream()
                 .map(TargetUuidResponseDto::toVo)
                 .toList();
@@ -54,8 +55,8 @@ public class MemberController {
 
     @Operation(summary = "블랙리스트 멘토로 등록한 멘토 uuid 리스트 반환", description = "블랙리스트 멘토 uuid 리스트 반환")
     @GetMapping("/black")
-    public BaseResponse<List<TargetUuidResponseVo>> getBlackTargetUuid(@RequestHeader("userUuid") String uuid) {
-        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getBlackTargetUuid(uuid)
+    public BaseResponse<List<TargetUuidResponseVo>> getBlackTargetUuid(@RequestHeader("userUuid") String uuid, @RequestParam(required = false) Long cursorId, @RequestParam(defaultValue = "10") int size) {
+        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getBlackTargetUuid(uuid,cursorId,size)
                 .stream()
                 .map(TargetUuidResponseDto::toVo)
                 .toList();
