@@ -2,12 +2,16 @@ package com.multitap.member.application;
 
 import com.multitap.member.common.exception.BaseException;
 import com.multitap.member.common.response.BaseResponseStatus;
+import com.multitap.member.dto.in.IntroductionTextRequestDto;
 import com.multitap.member.dto.in.MenteeProfileRequestDto;
 import com.multitap.member.dto.in.MentorProfileRequestDto;
 import com.multitap.member.dto.in.ProfileImageRequestDto;
+import com.multitap.member.dto.out.IntroductionTextResponseDto;
+import com.multitap.member.entity.IntroductionText;
 import com.multitap.member.entity.MemberProfileImage;
 import com.multitap.member.entity.MenteeProfile;
 import com.multitap.member.entity.MentorProfile;
+import com.multitap.member.infrastructure.IntroductionTextRepository;
 import com.multitap.member.infrastructure.MemberProfileImageRepository;
 import com.multitap.member.infrastructure.MenteeProfileRepository;
 import com.multitap.member.infrastructure.MentorProfileRepository;
@@ -29,6 +33,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     private final MentorProfileRepository mentorProfileRepository;
     private final MenteeProfileRepository menteeProfileRepository;
     private final MemberProfileImageRepository memberProfileImageRepository;
+    private final IntroductionTextRepository introductionTextRepository;
     private final KafkaProducerService kafkaProducerService;
 
     @Override
@@ -83,5 +88,21 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         kafkaProducerService.sendCreateProfileImageUrl(ProfileImageDto.from(memberProfileImage));
 
     }
+
+    @Override
+    public void addIntroductionText(IntroductionTextRequestDto introductionTextRequestDto) {
+        if (introductionTextRepository.existsByUuid(introductionTextRequestDto.getUuid())) {
+            throw new BaseException(BaseResponseStatus.DUPLICATED_PROFILE);
+        }
+        introductionTextRepository.save(introductionTextRequestDto.toEntity(introductionTextRequestDto));
+    }
+
+    @Override
+    public IntroductionTextResponseDto getIntroductionText(String uuid) {
+         IntroductionText introductionText = introductionTextRepository.findByUuid(uuid)
+                 .orElseThrow(()-> new BaseException(BaseResponseStatus.NO_EXIST_PROFILE));
+         return IntroductionTextResponseDto.from(introductionText);
+    }
+
 
 }

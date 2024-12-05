@@ -7,6 +7,7 @@ import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.dto.in.*;
 import com.multitap.member.dto.out.TargetUuidResponseDto;
 import com.multitap.member.vo.in.*;
+import com.multitap.member.vo.out.IntroductionTextResponseVo;
 import com.multitap.member.vo.out.TargetUuidResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -110,6 +111,19 @@ public class MemberController {
     public BaseResponse<Void> changeProfileImage(@RequestHeader("userUuid") String uuid, @RequestBody ProfileImageRequestVo profileImageRequestVo) {
         memberProfileService.changeProfileImage(ProfileImageRequestDto.from(profileImageRequestVo, uuid));
         return new BaseResponse<>();
+    }
+
+    @Operation(summary = "회원 소개글 등록", description = "회원의 소개글을 등록합니다.")
+    @PostMapping("/introduction")
+    public BaseResponse<Void> addIntroduction(@RequestHeader("userUuid") String uuid, @RequestBody IntroductionRequestVo introductionRequestVo) {
+        memberProfileService.addIntroductionText(IntroductionTextRequestDto.from(uuid,introductionRequestVo));
+        return new BaseResponse<>();
+    }
+
+    @Operation(summary = "회원 소개글 조회", description = "회원의 소개글을 조회합니다.")
+    @GetMapping("/introduction")
+    public BaseResponse<IntroductionTextResponseVo> getIntroduction(@RequestHeader("userUuid") String uuid) {
+        return new BaseResponse<>(memberProfileService.getIntroductionText(uuid).toVo());
     }
 
 }
