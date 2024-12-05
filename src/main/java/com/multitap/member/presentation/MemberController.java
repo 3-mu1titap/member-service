@@ -6,10 +6,8 @@ import com.multitap.member.application.ReactionService;
 import com.multitap.member.common.response.BaseResponse;
 import com.multitap.member.dto.in.*;
 import com.multitap.member.dto.out.TargetUuidResponseDto;
-import com.multitap.member.entity.MemberProfileImage;
-import com.multitap.member.kafka.producer.KafkaProducerService;
-import com.multitap.member.kafka.producer.ProfileImageDto;
 import com.multitap.member.vo.in.*;
+import com.multitap.member.vo.out.IntroductionTextResponseVo;
 import com.multitap.member.vo.out.TargetUuidResponseVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,9 +27,7 @@ public class MemberController {
     private final ReactionService reactionService;
     private final HashtagService hashtagService;
     private final MemberProfileService memberProfileService;
-    private final KafkaProducerService kafkaProducerService;
 
-    //todo: dev 설정 변경함
 
     @Operation(summary = "특정 회원에 대한 반응(좋아요/블랙리스트) 등록", description = "특정 회원에 대한 반응(좋아요 또는 싫어요)을 등록합니다.")
     @PostMapping("/{targetUuid}/reaction")
@@ -40,11 +36,16 @@ public class MemberController {
         return new BaseResponse<>();
     }
 
-    //todo: 페이지네이션 처리하기
+    @Operation(summary = "멘티 좋아요 유무 조회", description = "멘토에 대한 관심 멘토 등록 유무를 조회 합니다.")
+    @GetMapping("/{targetUuid}/like")
+    public BaseResponse<Boolean> getLiked(@RequestHeader("userUuid") String uuid, @PathVariable("targetUuid") String targetUuid) {
+        return new BaseResponse<>(reactionService.getLiked(uuid, targetUuid).isLiked());
+    }
+
     @Operation(summary = "관심 멘토로 등록한 멘토 uuid 리스트 반환", description = "관심 멘토 uuid 리스트 반환")
-    @GetMapping("/like/targetUuid")
-    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid) {
-        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid)
+    @GetMapping("/like")
+    public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid, @RequestParam(required = false) Long cursorId, @RequestParam(defaultValue = "10") int size) {
+        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getLikeTargetUuid(uuid,cursorId,size)
                 .stream()
                 .map(TargetUuidResponseDto::toVo)
                 .toList();
@@ -52,9 +53,10 @@ public class MemberController {
     }
 
     @Operation(summary = "블랙리스트 멘토로 등록한 멘토 uuid 리스트 반환", description = "블랙리스트 멘토 uuid 리스트 반환")
-    @GetMapping("/black/targetUuid")
-    public BaseResponse<List<TargetUuidResponseVo>> getBlackTargetUuid(@RequestHeader("userUuid") String uuid) {
-        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getBlackTargetUuid(uuid)
+    @GetMapping("/black")
+    public BaseResponse<List<TargetUuidResponseVo>> getBlackTargetUuid(@RequestHeader("userUuid") String uuid, @RequestParam(required = false) Long cursorId, @RequestParam(defaultValue = "10") int size) {
+        List<TargetUuidResponseVo> TargetUuidResponseVoList = reactionService.getBlackTargetUuid(uuid,cursorId,size)
+
                 .stream()
                 .map(TargetUuidResponseDto::toVo)
                 .toList();
@@ -111,7 +113,18 @@ public class MemberController {
         return new BaseResponse<>();
     }
 
+    @Operation(summary = "회원 소개글 등록", description = "회원의 소개글을 등록합니다.")
+    @PostMapping("/introduction")
+    public BaseResponse<Void> addIntroduction(@RequestHeader("userUuid") String uuid, @RequestBody IntroductionRequestVo introductionRequestVo) {
+        memberProfileService.addIntroductionText(IntroductionTextRequestDto.from(uuid,introductionRequestVo));
+        return new BaseResponse<>();
+    }
 
+    @Operation(summary = "회원 소개글 조회", description = "회원의 소개글을 조회합니다.")
+    @GetMapping("/introduction")
+    public BaseResponse<IntroductionTextResponseVo> getIntroduction(@RequestHeader("userUuid") String uuid) {
+        return new BaseResponse<>(memberProfileService.getIntroductionText(uuid).toVo());
+    }
 
 }
 
