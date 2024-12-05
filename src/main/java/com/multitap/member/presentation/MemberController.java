@@ -35,7 +35,12 @@ public class MemberController {
         return new BaseResponse<>();
     }
 
-    //todo: 페이지네이션 처리하기
+    @Operation(summary = "멘티 좋아요 유무 조회", description = "멘토에 대한 관심 멘토 등록 유무를 조회 합니다.")
+    @GetMapping("/{targetUuid}/like")
+    public BaseResponse<Boolean> getLiked(@RequestHeader("userUuid") String uuid, @PathVariable("targetUuid") String targetUuid) {
+        return new BaseResponse<>(reactionService.getLiked(uuid, targetUuid).isLiked());
+    }
+
     @Operation(summary = "관심 멘토로 등록한 멘토 uuid 리스트 반환", description = "관심 멘토 uuid 리스트 반환")
     @GetMapping("/like")
     public BaseResponse<List<TargetUuidResponseVo>> getLikeTargetUuid(@RequestHeader("userUuid") String uuid, @RequestParam(required = false) Long cursorId, @RequestParam(defaultValue = "10") int size) {
@@ -106,8 +111,6 @@ public class MemberController {
         memberProfileService.changeProfileImage(ProfileImageRequestDto.from(profileImageRequestVo, uuid));
         return new BaseResponse<>();
     }
-
-
 
 }
 
