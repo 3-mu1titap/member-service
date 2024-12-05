@@ -43,5 +43,6 @@ public class SwaggerConfig {
                 .title("MEMBER SERVICE")
                 .description("MEMBER SERVICE Swagger UI")
                 .version("1.0.0");
+        //
     }
 }

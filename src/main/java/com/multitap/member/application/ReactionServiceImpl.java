@@ -1,7 +1,6 @@
 package com.multitap.member.application;
 
 import com.multitap.member.dto.in.ReactionRequestDto;
-import com.multitap.member.dto.out.LikedResponseDto;
 import com.multitap.member.dto.out.TargetUuidResponseDto;
 import com.multitap.member.entity.Reaction;
 import com.multitap.member.infrastructure.ReactionRepository;
@@ -67,18 +66,6 @@ public class ReactionServiceImpl implements ReactionService {
                     .stream()
                     .map(TargetUuidResponseDto::from)
                     .toList();
-        }
-    }
-
-    @Override
-    public LikedResponseDto getLiked(String uuid, String targetUuid) {
-        Reaction reaction = reactionRepository.findByUuidAndTargetUuidAndType(uuid, targetUuid, true)
-                .orElse(null);
-
-        if (reaction == null) {
-            return LikedResponseDto.from(false);
-        } else {
-            return LikedResponseDto.from(reaction.isLiked());
         }
     }
 }
