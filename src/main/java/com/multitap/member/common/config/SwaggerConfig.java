@@ -23,25 +23,25 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         String securityJwtName = "JWT";
         SecurityRequirement securityRequirement = new SecurityRequirement().addList(
-            securityJwtName);
+                securityJwtName);
         Components components = new Components()
-            .addSecuritySchemes(securityJwtName, new SecurityScheme()
-                .name(securityJwtName)
-                .type(SecurityScheme.Type.HTTP)
-                .scheme(BEARER_TOKEN_PREFIX)
-                .bearerFormat(securityJwtName));
+                .addSecuritySchemes(securityJwtName, new SecurityScheme()
+                        .name(securityJwtName)
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme(BEARER_TOKEN_PREFIX)
+                        .bearerFormat(securityJwtName));
         return new OpenAPI()
-            .addSecurityItem(securityRequirement)
-            .components(components)
-//            .addServersItem(new Server().url("/payment-service"))
-            .addServersItem(new Server().url(swaggerUri))
-            .info(apiInfo());
+                .addSecurityItem(securityRequirement)
+                .components(components)
+                .addServersItem(new Server().url("/member-service"))
+                .addServersItem(new Server().url(swaggerUri))
+                .info(apiInfo());
     }
 
     private Info apiInfo() {
         return new Info()
-            .title("MEMBER SERVICE")
-            .description("MEMBER SERVICE Swagger UI")
-            .version("1.0.0");
+                .title("MEMBER SERVICE")
+                .description("MEMBER SERVICE Swagger UI")
+                .version("1.0.0");
     }
 }
