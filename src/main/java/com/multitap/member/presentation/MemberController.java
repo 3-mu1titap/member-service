@@ -1,5 +1,6 @@
 package com.multitap.member.presentation;
 
+import com.multitap.member.application.DataInsertService;
 import com.multitap.member.application.HashtagService;
 import com.multitap.member.application.MemberProfileService;
 import com.multitap.member.application.ReactionService;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class MemberController {
     private final ReactionService reactionService;
     private final HashtagService hashtagService;
     private final MemberProfileService memberProfileService;
+    private final DataInsertService dataInsertService;
 
 
     @Operation(summary = "특정 회원에 대한 반응(좋아요/블랙리스트) 등록", description = "특정 회원에 대한 반응(좋아요 또는 싫어요)을 등록합니다.")
@@ -125,6 +128,15 @@ public class MemberController {
     public BaseResponse<IntroductionTextResponseVo> getIntroduction(@RequestHeader("userUuid") String uuid) {
         return new BaseResponse<>(memberProfileService.getIntroductionText(uuid).toVo());
     }
+
+    @Tag(name = "회원 더미 데이터 저장 API", description = "csv 파일로 데이터 저장")
+    @Operation(summary = "회원 프로필 이미지 더미 데이터 저장 API", description = "csv 파일로 데이터 저장.")
+    @PostMapping(value = "/data", consumes = "multipart/form-data")
+    public BaseResponse<Void> addData(@RequestParam("file") MultipartFile file) {
+        dataInsertService.addMemberProfileImageFromCsv(file);
+        return new BaseResponse<>();
+    }
+
 
 }
 

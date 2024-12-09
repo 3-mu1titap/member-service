@@ -5,9 +5,9 @@ import com.multitap.member.entity.Hashtag;
 import com.multitap.member.infrastructure.HashtagRepository;
 import com.multitap.member.kafka.producer.HashtagDto;
 import com.multitap.member.kafka.producer.KafkaProducerService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;

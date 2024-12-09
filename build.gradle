@@ -35,6 +35,9 @@ dependencies {
     // Jackson 라이브러리 추가
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+    //csv
+    implementation 'org.apache.commons:commons-csv:1.11.0'
+
 }
 dependencyManagement {
     imports {

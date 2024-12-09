@@ -19,10 +19,10 @@ import com.multitap.member.kafka.producer.KafkaProducerService;
 import com.multitap.member.kafka.producer.MenteeProfileDto;
 import com.multitap.member.kafka.producer.MentorProfileDto;
 import com.multitap.member.kafka.producer.ProfileImageDto;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

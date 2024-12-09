@@ -5,12 +5,12 @@ import com.multitap.member.dto.out.LikedResponseDto;
 import com.multitap.member.dto.out.TargetUuidResponseDto;
 import com.multitap.member.entity.Reaction;
 import com.multitap.member.infrastructure.ReactionRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
