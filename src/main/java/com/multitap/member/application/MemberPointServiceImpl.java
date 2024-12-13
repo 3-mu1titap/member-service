@@ -50,8 +50,8 @@ public class MemberPointServiceImpl implements MemberPointService{
             () -> new BaseException(BaseResponseStatus.NO_EXIST_USER)
         );
 
-        if(memberPointAmount.getAmount() < pointAmount){
-            throw new BaseException(BaseResponseStatus.NOT_ENOUGH_POINT);   // 제대로 처리해주고 싶음...
+        if(memberPointAmount.getAmount() <= pointAmount){   // 같은 금액일 때도 고려
+            throw new BaseException(BaseResponseStatus.NOT_ENOUGH_POINT);   
         }
 
         log.info("after if statements");
@@ -64,6 +64,16 @@ public class MemberPointServiceImpl implements MemberPointService{
 
 
         return true;
+    }
+
+    @Override
+    public Integer getMemberPoint(String userUuid){
+        log.info("userUuid: {} in serviceImpl", userUuid);
+        MemberPointAmount memberPointAmount = memberPointRepository.findByUserUuid(userUuid).orElseThrow(
+            () -> new BaseException(BaseResponseStatus.NO_EXIST_USER)
+        );
+
+        return memberPointAmount.getAmount();
     }
 
 }

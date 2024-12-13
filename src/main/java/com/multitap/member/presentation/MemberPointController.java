@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,6 +52,14 @@ public class MemberPointController {
         log.info("userUuid: {}, pointPrice: {} in controller", userUuid, pointPrice);
 
         return new BaseResponse<>(memberPointService.useMemberPoint(userUuid,pointPrice));
+    }
+
+    @Operation(summary = "회원 포인트 조회")
+    @GetMapping("/points")
+    public BaseResponse<Integer> getPoints(@RequestParam("userUuid") String userUuid){
+        log.info("userUuid: {} in controller", userUuid);
+
+        return new BaseResponse<>(memberPointService.getMemberPoint(userUuid));
     }
 
 
